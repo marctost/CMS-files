@@ -1,0 +1,94 @@
+import ROOT
+import array
+from subprocess import Popen
+from sys import argv, exit, stdout, stderr
+import math
+
+ROOT.gROOT.SetBatch(True)
+
+cutvar = raw_input("What variable to test? ")
+
+
+ggHfile = "/hdfs/store/user/ldodd/crab_MONOHTT_PLAYPEN/Jun13_submission_v1/GluGluHToTauTau_M125_13TeV_powheg_pythia8/GluGluHToTauTau_M125_13TeV_powheg_pythia8/crab_MONOHTT_PLAYPEN_Mar17_v1_GluGluHToTauTau_M125_13TeV_powheg_pythia8/170613_152437/0000/analysis_1.root"
+
+def premutaucuts(event):
+  if event.dR<2.5 and event.met>40 and event.pt_1>20 and event.pt_2>20 and event.pth>20 and event.npv>0 and event.diLeptons==0 and event.charge==0 and event.againstElectronVLooseMVA6_2 > 0 and event.againstMuonTight3_2>0 and event.iso04_1<0.15 and (event.HLT_IsoMu24_v_fired>0 or event.HLT_IsoTkMu24_v_fired>0) and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0:
+    return True
+
+def preeletaucuts(event):
+  if event.dR<2.5 and event.met>40 and event.pt_1>20 and event.pt_2>20 and event.pth>20 and event.vertices>0 and event.dilepton_veto==0 and event.iso_1<0.1 and event.tightElectrons<=1 and event.tightMuons==0 and event.charge==0 and event.againstElectronTightMVA6_2 > 0 and event.againstMuonLoose3_2>0 and event.HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0 and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0:
+    return True
+
+def preditaucuts(event):
+  if event.dR<2.5 and event.met>40 and event.pt_1>20 and event.pt_2>20 and event.pth>20 and event.npv>0 and event.tightMuons==0 and event.tightElectrons==0 and event.againstMuonLoose3_1>0 and event.againstElectronVLooseMVA6_1>0 and event.againstElectronVLooseMVA6_2>0 and event.charge==0 and (event.HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0 or event.HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0):
+    return True
+
+ggHmutauhisto = ROOT.TH1F("ggHmutauhisto","",200,0,600)
+ggHeletauhisto = ROOT.TH1F("ggHeletauhisto","",200,0,600)
+ggHditauhisto = ROOT.TH1F("ggHditauhisto","",200,0,600)
+
+print "Creating ggH histos\n\n"
+ntuple_file = ROOT.TFile(ggHfile)
+tree = ntuple_file.Get("muTauEventTree/eventTree")
+for event in tree:
+  g = getattr(event, cutvar)
+  if premutaucuts(event):
+    ggHmutauhisto.Fill(g)
+
+
+def looper(cut):
+  for event in tree:
+    totcounter = 0
+    eventcounter = 0
+    testing = "event."+str(cutvar)
+    totcounter = totcounter+1
+    if testing > cut:
+      eventcounter = eventcounter +1
+    return totcounter
+
+def looperr(cut):
+  for event in tree:
+    totcounter = 0
+    eventcounter = 0
+    testing = "event."+str(cutvar)
+    totcounter = totcounter+1
+    if testing > cut:
+      eventcounter = eventcounter +1
+    return eventcounter
+
+cutcounter = 0
+while cutcounter < 101:
+
+  totcounter = looper(cutcounter)
+  eventcounter = looperr(cutcounter)
+  totcounterhisto = ggHmutauhisto.Integral(0, ggHmutauhisto.GetNbinsX())
+  signalcounterhisto = ggHmutauhisto.Integral(cutcounter*3, ggHmutauhisto.GetNbinsX())
+
+  print "total events for counter: "+str(totcounter)
+  print "total events for histo: "+str(totcounterhisto)
+  print "signal events for counter: "+str(eventcounter)
+  print "signal events for histo: "+str(signalcounterhisto)
+  print "\n"
+
+  cutcounter = cutcounter +10
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

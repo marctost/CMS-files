@@ -1,0 +1,78 @@
+import ROOT
+import array
+from subprocess import Popen
+from sys import argv, exit, stdout, stderr
+import math
+
+ROOT.gROOT.SetBatch(True)
+filename = argv[1]
+
+
+def premutaucuts(event):
+  if event.dR<1.7 and event.met>150 and  event.pt_1>26 and event.pt_2>26 and event.npv>0 and event.diLeptons==0 and event.charge==0 and event.againstElectronVLooseMVA6_2 > 0 and event.againstMuonTight3_2>0 and event.iso04_1<0.15 and (event.HLT_IsoMu24_v_fired>0 or event.HLT_IsoTkMu24_v_fired>0) and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0:
+    return True
+
+def preeletaucuts(event):
+  if event.dR<1.7 and event.met>150 and event.pt_1>26 and event.pt_2>26 and event.vertices>0 and event.dilepton_veto==0 and event.iso_1<0.1 and event.tightElectrons<=1 and event.tightMuons==0 and event.charge==0 and event.againstElectronTightMVA6_2 > 0 and event.againstMuonLoose3_2>0 and event.HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0 and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0:
+    return True
+
+def preditaucuts(event):
+  if event.dR<1.9 and event.met>160 and event.pt_1>26 and event.pt_2>40 and event.npv>0 and event.tightMuons==0 and event.tightElectrons==0 and event.againstMuonLoose3_1>0 and event.againstElectronVLooseMVA6_1>0 and event.againstElectronVLooseMVA6_2>0 and event.charge==0 and (event.HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0 or event.HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0):
+    return True
+
+
+
+muhisto = ROOT.TH1F("muhisto","",200,0,600)
+ehisto = ROOT.TH1F("ehisto","",200,0,600)
+dihisto = ROOT.TH1F("dihisto","",200,0,600)
+mucuthisto = ROOT.TH1F("mucuthisto","",200,0,600)
+ecuthisto = ROOT.TH1F("ecuthisto","",200,0,600)
+dicuthisto = ROOT.TH1F("dicuthisto","",200,0,600)
+
+
+ntuple_file = ROOT.TFile(filename)
+tree = ntuple_file.Get("muTauEventTree/eventTree")
+for event in tree:
+  g = getattr(event, "met")
+  muhisto.Fill(g)
+  if premutaucuts(event):
+    mucuthisto.Fill(g)
+
+tree = ntuple_file.Get("eleTauEventTree/eventTree")
+for event in tree:
+  g = getattr(event, "met")
+  ehisto.Fill(g)
+  if preeletaucuts(event):
+    ecuthisto.Fill(g)
+
+tree = ntuple_file.Get("diTauEventTree/eventTree")
+for event in tree:
+  g = getattr(event, "met")
+  dihisto.Fill(g)
+  if preditaucuts(event):
+    dicuthisto.Fill(g)
+
+
+
+
+mutot = muhisto.Integral()
+mucut = mucuthisto.Integral()
+etot = ehisto.Integral()
+ecut = ecuthisto.Integral()
+ditot = dihisto.Integral()
+dicut = dicuthisto.Integral()
+
+print "For file "+str(filename)+"\n"
+print "muTau uncut events: "+str(mutot)+"    muTau cut events: "+str(mucut)
+print "eleTau uncut events: "+str(etot)+"     eleTau cut events: "+str(ecut)
+print "diTau uncut events: "+str(ditot)+"     diTot cut events: "+str(dicut)  
+
+
+
+
+
+
+
+
+
+
