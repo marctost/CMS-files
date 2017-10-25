@@ -51,19 +51,19 @@ for n in range(0, int(filenumber)):
 # ditau: event.met>160 and event.m_vis<125 and event.pth>120 and event.dR<2.1 and event.pt_1>55 and event.pt_2>40 and event.npv>0 and 
 ############################################################
 def muTauCutTester(event):
-  if event.met>100 and event.m_vis<125 and event.pth>120 and event.dR<2.2 and event.pt_1>26 and event.pt_2>20 and event.npv>0 and event.diLeptons==0 and event.charge==0 and event.againstElectronVLooseMVA6_2 > 0 and event.againstMuonTight3_2>0 and event.iso04_1<0.15 and (event.HLT_IsoMu24_v_fired>0 or event.HLT_IsoTkMu24_v_fired>0) and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0:
+  if event.met>150 and event.m_vis<125 and event.pth>120 and event.dR<1.7 and event.pt_1>26 and event.pt_2>20 and event.npv>0 and event.diLeptons==0 and event.charge==0 and event.againstElectronVLooseMVA6_2 > 0 and event.againstMuonTight3_2>0 and event.iso04_1<0.15 and (event.HLT_IsoMu24_v_fired>0 or event.HLT_IsoTkMu24_v_fired>0) and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0 and event.BadMuonFilter==1 and event.Flag_HBHENoiseFilter_fired == 1 and event.Flag_HBHENoiseIsoFilter_fired == 1 and event.Flag_goodVertices_fired == 1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired == 1:
     return True
 def eleTauCutTester(event):
-  if event.met>100 and event.pth>120 and event.m_vis<125 and event.dR<2.2 and event.pt_1>26 and event.pt_2>20 and event.vertices>0 and event.dilepton_veto==0 and event.iso_1<0.1 and event.tightElectrons<=1 and event.tightMuons==0 and event.charge==0 and event.againstElectronTightMVA6_2 > 0 and event.againstMuonLoose3_2>0 and event.HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0 and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0:
+  if event.met>150 and event.pth>120 and event.m_vis<125 and event.dR<1.7 and event.pt_1>26 and event.pt_2>20 and event.vertices>0 and event.dilepton_veto==0 and event.iso_1<0.1 and event.tightElectrons<=1 and event.tightMuons==0 and event.charge==0 and event.againstElectronTightMVA6_2 > 0 and event.againstMuonLoose3_2>0 and event.HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0 and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0 and event.BadMuonFilter==1 and event.Flag_HBHENoiseFilter_fired==1 and event.Flag_HBHENoiseIsoFilter_fired==1 and event.Flag_globalTightHalo2016Filter_fired==1 and event.Flag_goodVertices_fired==1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1:
     return True
 def diTauCutTester(event):
   if event.tightMuons==0 and event.tightElectrons==0 and event.againstMuonLoose3_1>0 and event.againstElectronVLooseMVA6_1>0 and event.againstElectronVLooseMVA6_2>0 and event.charge==0 and (event.HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0 or event.HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0):
     return True
 def datamuTauCutTester(event):
-    if event.BadMuonFilter==1 and event.Flag_eeBadScFilter_fired == 1 and event.Flag_HBHENoiseFilter_fired == 1 and event.Flag_HBHENoiseIsoFilter_fired == 1 and event.Flag_goodVertices_fired == 1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired == 1:
+    if event.Flag_eeBadScFilter_fired == 1:
       return True
 def dataeleTauCutTester(event):
-    if event.Flag_eeBadScFilter_fired==1 and event.BadMuonFilter==1 and event.Flag_HBHENoiseFilter_fired==1 and event.Flag_HBHENoiseIsoFilter_fired==1 and event.Flag_globalTightHalo2016Filter_fired==1 and event.Flag_goodVertices_fired==1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1:
+    if event.Flag_eeBadScFilter_fired==1:
       return True
 
 #############################################################
@@ -159,7 +159,7 @@ legend.SetBorderSize(1)
 histo = {str(0):ROOT.TH1F("histo0",title,int(binnumber),float(bottombin),float(topbin)), str(1):ROOT.TH1F("histo1",title,int(binnumber),float(bottombin),float(topbin)), str(2):ROOT.TH1F("histo2",title,int(binnumber),float(bottombin),float(topbin)), str(3):ROOT.TH1F("histo3",title,int(binnumber),float(bottombin),float(topbin)), str(4):ROOT.TH1F("histo4",title,int(binnumber),float(bottombin),float(topbin)), str(5):ROOT.TH1F("histo5",title,int(binnumber),float(bottombin),float(topbin)), str(6):ROOT.TH1F("histo6",title,int(binnumber),float(bottombin),float(topbin)), str(7):ROOT.TH1F("histo7",title,int(binnumber),float(bottombin),float(topbin)), str(8):ROOT.TH1F("histo8",title,int(binnumber),float(bottombin),float(topbin)), str(9):ROOT.TH1F("histo9",title,int(binnumber),float(bottombin),float(topbin))} 
 
 signal = ROOT.TH1F("signal",title, int(binnumber),float(bottombin), float(topbin))
-signalfile = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/ZpBaryonic_Zp1000_MChi150.root")
+signalfile = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug27/ZpBaryonic_Zp1000_MChi150.root")
 
 ################################################
 
@@ -167,8 +167,6 @@ if channel == "mu":
   signaltree = signalfile.Get("muTauEventTree/eventTree")
   for event in signaltree:
     g = getattr(event, variable)
-    zptweight = getattr(event, "ZPt_reweight")
-    wptweight = getattr(event, "WPt_reweight")
     weight = getattr(event, "__WEIGHT__")
     genweight = getattr(event, "GENWEIGHT")
     puweight = getattr(event, "puweight")
@@ -177,13 +175,11 @@ if channel == "mu":
     tauid1 = getattr(event, "TAUID1")
     trackweight = getattr(event, "trackweight")
     if muTauCutTester(event):
-      signal.Fill(g, 35870*zptweight*wptweight*weight*genweight*puweight*pogid1*pogtrigger*tauid1*trackweight)
-if channel == "e":
+      signal.Fill(g, 35870*weight*genweight*puweight*pogid1*pogtrigger*tauid1*trackweight)
+elif channel == "e":
   signaltree = signalfile.Get("eleTauEventTree/eventTree")
   for event in signaltree:
     g = getattr(event, variable)
-    zptweight = getattr(event, "ZPt_reweight")
-    wptweight = getattr(event, "WPt_reweight")
     weight = getattr(event, "__WEIGHT__")
     genweight = getattr(event, "GENWEIGHT")
     puweight = getattr(event, "puweight")
@@ -192,58 +188,37 @@ if channel == "e":
     trigweight = getattr(event, "trigweight_REDO")
     trackweight = getattr(event, "trackweight")
     if eleTauCutTester(event):
-      signal.Fill(g, 35870*zptweight*wptweight*weight*genweight*puweight*tauid1*idisoweight*trigweight*trackweight)
-if channel == "di":
+      signal.Fill(g, 35870*weight*genweight*puweight*tauid1*idisoweight*trigweight*trackweight)
+elif channel == "di":
   signaltree = signalfile.Get("diTauEventTree/eventTree")
   for event in signaltree:
     g = getattr(event, variable)
-    zptweight = getattr(event, "ZPt_reweight")
-    wptweight = getattr(event, "WPt_reweight")
     weight = getattr(event, "__WEIGHT__")
     genweight = getattr(event, "GENWEIGHT")
     puweight = getattr(event, "puweight")
     trigweight = getattr(event, "trigweight_REDO")
     tauid1 = getattr(event, "TAUID1")
     if diTauCutTester(event):
-      signal.Fill(g, 35870*zptweight*wptweight*weight*genweight*puweight*trigweight*tauid1)
+      signal.Fill(g, 35870*weight*genweight*puweight*trigweight*tauid1)
 
 signal.SetLineColor(ROOT.kRed)
 
-if channel == "mu":
-  datafile1 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAB.root")
-  datafile2 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAC.root")
-  datafile3 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAD.root")
-  datafile4 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAE.root")
-  datafile5 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAF.root")
-  datafile6 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAG.root")
-  datafile7 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAH2.root")
-  datafile8 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/muDATAH3.root")
-if channel == "e":
-  datafile1 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAB.root")
-  datafile2 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAC.root")
-  datafile3 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAD.root")
-  datafile4 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAE.root")
-  datafile5 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAF.root")
-  datafile6 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAG.root")
-  datafile7 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAH2.root")
-  datafile8 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/eleDATAH3.root")
-if channel == "di":
-  datafile1 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAB.root")
-  datafile2 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAC.root")
-  datafile3 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAD.root")
-  datafile4 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAE.root")
-  datafile5 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAF.root")
-  datafile6 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAG.root")
-  datafile7 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAH2.root")
-  datafile8 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug13/tauDATAH3.root")
 
+
+if channel == "mu":
+  datafile1 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug27/muDATA.root")
+elif channel == "e":
+  datafile1 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug27/eleDATA.root")
+elif channel == "di":
+  datafile1 = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug27/tauDATA.root")
 
 data = ROOT.TH1F("data",title,int(binnumber),float(bottombin),float(topbin))
+
 if channel == "mu":
   datatree = datafile1.Get("muTauEventTree/eventTree")
-if channel =="e":
+elif channel =="e":
   datatree = datafile1.Get("eleTauEventTree/eventTree")
-if channel =="di":
+elif channel =="di":
   datatree = datafile1.Get("diTauEventTree/eventTree")
 q=0
 for event in datatree:
@@ -252,162 +227,16 @@ for event in datatree:
     if muTauCutTester(event) and datamuTauCutTester(event):
       data.Fill(g)
       q=q+1
-  if channel =="e":
+  elif channel =="e":
     if eleTauCutTester(event):
       data.Fill(g)
       q=q+1
-  if channel =="di":
+  elif channel =="di":
     if diTauCutTester(event):
       data.Fill(g)
       q=q+1
-print ("Events passed after 1: "+str(q))
-if channel == "mu":
-  datatree = datafile2.Get("muTauEventTree/eventTree")
-if channel =="e":
-  datatree = datafile2.Get("eleTauEventTree/eventTree")
-if channel =="di":
-  datatree = datafile2.Get("diTauEventTree/eventTree")
-for event in datatree:
-  g = getattr(event, variable)
-  if channel == "mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel == "e":
-    if eleTauCutTester(event) and dataeleTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="di":
-    if diTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-print ("Events passed after 2: "+str(q))
-if channel == "mu":
-  datatree = datafile3.Get("muTauEventTree/eventTree")
-if channel =="e":
-  datatree = datafile3.Get("eleTauEventTree/eventTree")
-if channel =="di":
-  datatree = datafile3.Get("diTauEventTree/eventTree")
-for event in datatree:
-  g = getattr(event, variable)
-  if channel =="mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="e":
-    if eleTauCutTester(event) and dataeleTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="di":
-    if diTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-print ("Events passed after 3: "+str(q))
-if channel == "mu":
-  datatree = datafile4.Get("muTauEventTree/eventTree")
-if channel =="e":
-  datatree = datafile4.Get("eleTauEventTree/eventTree")
-if channel =="di":
-  datatree = datafile4.Get("diTauEventTree/eventTree")
-for event in datatree:
-  g = getattr(event, variable)
-  if channel =="mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="e":
-    if eleTauCutTester(event) and dataeleTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="di":
-    if diTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-print ("Events passed after 4: "+str(q))
-if channel == "mu":
-  datatree = datafile5.Get("muTauEventTree/eventTree")
-if channel =="e":
-  datatree = datafile5.Get("eleTauEventTree/eventTree")
-if channel =="di":
-  datatree = datafile5.Get("diTauEventTree/eventTree")
-for event in datatree:
-  g = getattr(event, variable)
-  if channel =="mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="e":
-    if eleTauCutTester(event) and dataeleTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="di":
-    if diTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-print ("Events passed after 5: "+str(q))
-if channel == "mu":
-  datatree = datafile6.Get("muTauEventTree/eventTree")
-if channel =="e":
-  datatree = datafile6.Get("eleTauEventTree/eventTree")
-if channel =="di":
-  datatree = datafile6.Get("diTauEventTree/eventTree")
-for event in datatree:
-  g = getattr(event, variable)
-  if channel =="mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="e":
-    if eleTauCutTester(event) and dataeleTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="di":
-    if diTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-print ("Events passed after 6: "+str(q))
-if channel == "mu":
-  datatree = datafile7.Get("muTauEventTree/eventTree")
-if channel =="e":
-  datatree = datafile7.Get("eleTauEventTree/eventTree")
-if channel =="di":
-  datatree = datafile7.Get("diTauEventTree/eventTree")
-for event in datatree:
-  g = getattr(event, variable)
-  if channel =="mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="e":
-    if eleTauCutTester(event) and dataeleTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="di":
-    if diTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-print ("Events passed after 7: "+str(q))
-if channel == "mu":
-  datatree = datafile8.Get("muTauEventTree/eventTree")
-if channel =="e":
-  datatree = datafile8.Get("eleTauEventTree/eventTree")
-if channel =="di":
-  datatree = datafile8.Get("diTauEventTree/eventTree")
-for event in datatree:
-  g = getattr(event, variable)
-  if channel =="mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="e":
-    if eleTauCutTester(event) and dataeleTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-  if channel =="di":
-    if diTauCutTester(event):
-      data.Fill(g)
-      q=q+1
-print ("Events passed after 8: "+str(q))
+print ("Data events passing cuts: "+str(q))
+
 
 data.SetMarkerStyle(20)
 data.SetMarkerSize(1.0)
@@ -420,14 +249,20 @@ for i in range(0, int(filenumber)):
   print channel
   if channel == "mu":
     tree = ntuple_file.Get("muTauEventTree/eventTree")
-  if channel == "e":
+  elif channel == "e":
     tree = ntuple_file.Get("eleTauEventTree/eventTree")
-  if channel == "di":
+  elif channel == "di":
     tree = ntuple_file.Get("diTauEventTree/eventTree")
   for event in tree:
     g = getattr(event, variable)
-    zptweight = getattr(event, "ZPt_reweight")
-    wptweight = getattr(event, "WPt_reweight")
+    if infile[i] == "/nfs_scratch/tost/monohiggs_Aug27/ZJETS.root":
+      zptweight = getattr(event, "ZPt_reweight")
+    elif infile != "/nfs_scratch/tost/monohiggs_Aug27/ZJETS.root":
+      zptweight = 1
+    if infile[i] == "/nfs_scratch/tost/monohiggs_Aug27/WJETS.root":
+      wptweight = getattr(event, "WPt_reweight")
+    elif infile[i] != "/nfs_scratch/tost/monohiggs_Aug27/WJETS.root":
+      wptweight = 1
     if channel == "mu":
       weight = getattr(event, "__WEIGHT__")
       genweight = getattr(event, "GENWEIGHT")
@@ -438,7 +273,7 @@ for i in range(0, int(filenumber)):
       trackweight = getattr(event, "trackweight")
       if muTauCutTester(event):
 	histo[str(i)].Fill(g, weight*genweight*puweight*pogid1*pogtrigger*tauid1*trackweight*35.9*1000*zptweight*wptweight)
-    if channel == "e":
+    elif channel == "e":
       weight = getattr(event, "__WEIGHT__")
       genweight = getattr(event, "GENWEIGHT")
       puweight = getattr(event, "puweight")
@@ -448,7 +283,7 @@ for i in range(0, int(filenumber)):
       trackweight = getattr(event, "trackweight")
       if eleTauCutTester(event):
 	histo[str(i)].Fill(g, weight*genweight*puweight*tauid1*idisoweight*trigweight*trackweight*35.9*1000*zptweight*wptweight)
-    if channel == "di":
+    elif channel == "di":
       weight = getattr(event, "__WEIGHT__")
       genweight = getattr(event, "GENWEIGHT")
       puweight = getattr(event, "puweight")
@@ -456,6 +291,9 @@ for i in range(0, int(filenumber)):
       tauid1 = getattr(event, "TAUID1")
       if diTauCutTester(event):
 	histo[str(i)].Fill(g, weight*genweight*puweight*trigweight*tauid1*35.9*1000*zptweight*wptweight)
+
+
+
 
 label=[]
 for j in range(0,int(filenumber)):
@@ -479,7 +317,6 @@ if (data.GetMaximum() > stacks1.GetMaximum()):
 if (data.GetMaximum() <= stacks1.GetMaximum()):
   stacks1.SetMaximum(stacks1.GetMaximum()*1.4)
 
-#stacks1.SetMaximum(stacks1.GetMaximum()*1.4)
 
 data.Draw("e,SAME")
 CMS_lumi.CMS_lumi(canvas1, iPeriod, iPos)
