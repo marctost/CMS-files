@@ -50,14 +50,14 @@ for n in range(0, int(filenumber)):
 
 # ditau: event.met>160 and event.m_vis<125 and event.pth>120 and event.dR<2.1 and event.pt_1>55 and event.pt_2>40 and event.npv>0 and 
 ############################################################
-def muTauCutTester(event):
-  if event.met>150 and event.m_vis<125 and event.pth>120 and event.dR<1.7 and event.pt_1>26 and event.pt_2>20 and event.npv>0 and event.diLeptons==0 and event.charge==0 and event.againstElectronVLooseMVA6_2 > 0 and event.againstMuonTight3_2>0 and event.iso04_1<0.15 and (event.HLT_IsoMu24_v_fired>0 or event.HLT_IsoTkMu24_v_fired>0) and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0 and event.BadMuonFilter==1 and event.Flag_HBHENoiseFilter_fired == 1 and event.Flag_HBHENoiseIsoFilter_fired == 1 and event.Flag_goodVertices_fired == 1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired == 1:
+def muTauCutTester(event, pt_vis):
+  if pt_vis>65 and event.met>150 and event.m_vis<125 and event.pth>120 and event.pt_1>26 and event.pt_2>20 and event.npv>0 and event.diLeptons==0 and event.charge==0 and event.againstElectronVLooseMVA6_2 > 0 and event.againstMuonTight3_2>0 and event.iso04_1<0.15 and (event.HLT_IsoMu24_v_fired>0 or event.HLT_IsoTkMu24_v_fired>0) and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0 and event.BadMuonFilter==1 and event.Flag_HBHENoiseFilter_fired == 1 and event.Flag_HBHENoiseIsoFilter_fired == 1 and event.Flag_goodVertices_fired == 1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired == 1:
     return True
-def eleTauCutTester(event):
-  if event.met>150 and event.pth>120 and event.m_vis<125 and event.dR<1.7 and event.pt_1>26 and event.pt_2>20 and event.vertices>0 and event.dilepton_veto==0 and event.iso_1<0.1 and event.tightElectrons<=1 and event.tightMuons==0 and event.charge==0 and event.againstElectronTightMVA6_2 > 0 and event.againstMuonLoose3_2>0 and event.HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0 and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0 and event.BadMuonFilter==1 and event.Flag_HBHENoiseFilter_fired==1 and event.Flag_HBHENoiseIsoFilter_fired==1 and event.Flag_globalTightHalo2016Filter_fired==1 and event.Flag_goodVertices_fired==1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1:
+def eleTauCutTester(event, pt_vis):
+  if pt_vis>65 and event.met>150 and event.pth>120 and event.m_vis<125 and event.pt_1>26 and event.pt_2>20 and event.vertices>0 and event.dilepton_veto==0 and event.iso_1<0.1 and event.tightElectrons<=1 and event.tightMuons==0 and event.charge==0 and event.againstElectronTightMVA6_2 > 0 and event.againstMuonLoose3_2>0 and event.HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0 and event.byTightIsolationMVArun2v1DBoldDMwLT_2>0 and event.BadMuonFilter==1 and event.Flag_HBHENoiseFilter_fired==1 and event.Flag_HBHENoiseIsoFilter_fired==1 and event.Flag_globalTightHalo2016Filter_fired==1 and event.Flag_goodVertices_fired==1 and event.Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1:
     return True
-def diTauCutTester(event):
-  if event.tightMuons==0 and event.tightElectrons==0 and event.againstMuonLoose3_1>0 and event.againstElectronVLooseMVA6_1>0 and event.againstElectronVLooseMVA6_2>0 and event.charge==0 and (event.HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0 or event.HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0):
+def diTauCutTester(event, pt_vis):
+  if pt_vis>65 and event.tightMuons==0 and event.tightElectrons==0 and event.againstMuonLoose3_1>0 and event.againstElectronVLooseMVA6_1>0 and event.againstElectronVLooseMVA6_2>0 and event.charge==0 and (event.HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0 or event.HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0):
     return True
 def datamuTauCutTester(event):
     if event.Flag_eeBadScFilter_fired == 1:
@@ -69,6 +69,11 @@ def dataeleTauCutTester(event):
 #############################################################
 
 
+def makept_vis(event):
+  pt_in_x = event.pt_1*math.cos(event.phi_1)+event.pt_2*math.cos(event.phi_2)
+  pt_in_y = event.pt_1*math.sin(event.phi_1)+event.pt_2*math.sin(event.phi_2)
+  pt_vis = math.sqrt(pt_in_x*pt_in_x + pt_in_y*pt_in_y)
+  return pt_vis
 
 
 colors = [ROOT.kRed, ROOT.kBlue, ROOT.kMagenta, ROOT.kCyan, ROOT.kOrange, ROOT.kSpring, ROOT.kTeal, ROOT.kAzure, ROOT.kPink, ROOT.kYellow]
@@ -166,6 +171,7 @@ signalfile = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug27/ZpBaryonic_Zp1000_MCh
 if channel == "mu":
   signaltree = signalfile.Get("muTauEventTree/eventTree")
   for event in signaltree:
+    pt_vis = makept_vis(event)
     g = getattr(event, variable)
     weight = getattr(event, "__WEIGHT__")
     genweight = getattr(event, "GENWEIGHT")
@@ -174,11 +180,12 @@ if channel == "mu":
     pogtrigger = getattr(event, "POGtrigger")
     tauid1 = getattr(event, "TAUID1")
     trackweight = getattr(event, "trackweight")
-    if muTauCutTester(event):
+    if muTauCutTester(event, pt_vis):
       signal.Fill(g, 35870*weight*genweight*puweight*pogid1*pogtrigger*tauid1*trackweight)
 elif channel == "e":
   signaltree = signalfile.Get("eleTauEventTree/eventTree")
   for event in signaltree:
+    pt_vis = makept_vis(event)
     g = getattr(event, variable)
     weight = getattr(event, "__WEIGHT__")
     genweight = getattr(event, "GENWEIGHT")
@@ -187,18 +194,19 @@ elif channel == "e":
     idisoweight = getattr(event, "idisoweight_REDO")
     trigweight = getattr(event, "trigweight_REDO")
     trackweight = getattr(event, "trackweight")
-    if eleTauCutTester(event):
+    if eleTauCutTester(event, pt_vis):
       signal.Fill(g, 35870*weight*genweight*puweight*tauid1*idisoweight*trigweight*trackweight)
 elif channel == "di":
   signaltree = signalfile.Get("diTauEventTree/eventTree")
   for event in signaltree:
+    pt_vis = makept_vis(event)
     g = getattr(event, variable)
     weight = getattr(event, "__WEIGHT__")
     genweight = getattr(event, "GENWEIGHT")
     puweight = getattr(event, "puweight")
     trigweight = getattr(event, "trigweight_REDO")
     tauid1 = getattr(event, "TAUID1")
-    if diTauCutTester(event):
+    if diTauCutTester(event, pt_vis):
       signal.Fill(g, 35870*weight*genweight*puweight*trigweight*tauid1)
 
 signal.SetLineColor(ROOT.kRed)
@@ -222,17 +230,18 @@ elif channel =="di":
   datatree = datafile1.Get("diTauEventTree/eventTree")
 q=0
 for event in datatree:
+  pt_vis = makept_vis(event)
   g = getattr(event, variable)
   if channel =="mu":
-    if muTauCutTester(event) and datamuTauCutTester(event):
+    if muTauCutTester(event, pt_vis) and datamuTauCutTester(event):
       data.Fill(g)
       q=q+1
   elif channel =="e":
-    if eleTauCutTester(event):
+    if eleTauCutTester(event, pt_vis) and dataeleTauCutTester(event):
       data.Fill(g)
       q=q+1
   elif channel =="di":
-    if diTauCutTester(event):
+    if diTauCutTester(event, pt_vis):
       data.Fill(g)
       q=q+1
 print ("Data events passing cuts: "+str(q))
@@ -254,6 +263,7 @@ for i in range(0, int(filenumber)):
   elif channel == "di":
     tree = ntuple_file.Get("diTauEventTree/eventTree")
   for event in tree:
+    pt_vis = makept_vis(event)
     g = getattr(event, variable)
     if infile[i] == "/nfs_scratch/tost/monohiggs_Aug27/ZJETS.root":
       zptweight = getattr(event, "ZPt_reweight")
@@ -271,7 +281,7 @@ for i in range(0, int(filenumber)):
       pogtrigger = getattr(event, "POGtrigger")
       tauid1 = getattr(event, "TAUID1")
       trackweight = getattr(event, "trackweight")
-      if muTauCutTester(event):
+      if muTauCutTester(event, pt_vis):
 	histo[str(i)].Fill(g, weight*genweight*puweight*pogid1*pogtrigger*tauid1*trackweight*35.9*1000*zptweight*wptweight)
     elif channel == "e":
       weight = getattr(event, "__WEIGHT__")
@@ -281,7 +291,7 @@ for i in range(0, int(filenumber)):
       idisoweight = getattr(event, "idisoweight_REDO")
       trigweight = getattr(event, "trigweight_REDO")
       trackweight = getattr(event, "trackweight")
-      if eleTauCutTester(event):
+      if eleTauCutTester(event, pt_vis):
 	histo[str(i)].Fill(g, weight*genweight*puweight*tauid1*idisoweight*trigweight*trackweight*35.9*1000*zptweight*wptweight)
     elif channel == "di":
       weight = getattr(event, "__WEIGHT__")
@@ -289,7 +299,7 @@ for i in range(0, int(filenumber)):
       puweight = getattr(event, "puweight")
       trigweight = getattr(event, "trigweight_REDO")
       tauid1 = getattr(event, "TAUID1")
-      if diTauCutTester(event):
+      if diTauCutTester(event, pt_vis):
 	histo[str(i)].Fill(g, weight*genweight*puweight*trigweight*tauid1*35.9*1000*zptweight*wptweight)
 
 
@@ -339,7 +349,7 @@ frame = canvas1.GetFrame()
 frame.Draw()
 
 legend.Draw("same")
-saveas=saveWhere+name+variable+'.png'
+saveas=saveWhere+name+str(channel)+variable+'.png'
 canvas1.Update()
 canvas1.SaveAs(saveas)
 canvas1
