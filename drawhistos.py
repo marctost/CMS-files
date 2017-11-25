@@ -7,9 +7,9 @@ import math
 
 ROOT.gROOT.SetBatch(True)
 
-channel = raw_input("What channel are we using? (mu, e, di) ")
-axislabel = raw_input("What to label the axis? ")
-variable = raw_input("What variable are we using? ")
+channel = argv[1]
+axislabel = argv[2]
+variable = argv[3]
 
 if channel == "di":
   label = "   #tau_{h}#tau_{h}     "
@@ -19,11 +19,10 @@ if channel == "e":
   label = "    e#tau_{h}     "
 
 
-saveWhere='/afs/hep.wisc.edu/home/tost/workingArea/CMSSW_8_0_24_patch1/src/Real_work/'
+saveWhere='/afs/hep.wisc.edu/home/tost/workingArea/CMSSW_8_0_24_patch1/src/Real_work/Nov25plots/'
 
 #set the tdr style                                                                                
 tdrstyle.setTDRStyle()
-ROOT.gStyle.SetOptStat(2210)
 ROOT.gStyle.SetTitleAlign(13)
 
 #change the CMS_lumi variables (see CMS_lumi.py)                                                  
@@ -81,34 +80,38 @@ plotPad.cd()
 
 
 f = ROOT.TFile('/afs/hep.wisc.edu/home/tost/workingArea/CMSSW_8_0_24_patch1/src/Real_work/Histoshere.root')
-f.cd("histosarehere")
 
-sig = f.Get("histosarehere/sig")
-smh = f.Get("histosarehere/smh")
-dibos = f.Get("histosarehere/dibos")
-wjet = f.Get("histosarehere/wjet")
-znu = f.Get("histosarehere/znu")
-zjet = f.Get("histosarehere/zjet")
-tthist = f.Get("histosarehere/tthist")
-dat = f.Get("histosarehere/dat")
+sig = f.Get("histosarehere/Signal")
+smh = f.Get("histosarehere/smH125")
+dibos = f.Get("histosarehere/DiBosons")
+wjet = f.Get("histosarehere/WJets")
+znu = f.Get("histosarehere/Znunu")
+zjet = f.Get("histosarehere/ZJets")
+tthist = f.Get("histosarehere/TT")
+QCD = f.Get("histosarehere/QCD")
+dat = f.Get("histosarehere/Data")
 
 
 sig.SetLineColor(ROOT.kRed)
 smh.SetFillColor(ROOT.kOrange)
 smh.SetLineColor(ROOT.kBlack)
-dibos.SetFillColor(ROOT.kRed +3)
+dibos.SetFillColor(ROOT.kRed+3)
 dibos.SetLineColor(ROOT.kBlack)
-wjet.SetFillColor(ROOT.kBlue -9)
+wjet.SetFillColor(ROOT.kBlue-9)
 wjet.SetLineColor(ROOT.kBlack)
-znu.SetFillColor(ROOT.kPink +2)
+znu.SetFillColor(ROOT.kPink+2)
 znu.SetLineColor(ROOT.kBlack)
-zjet.SetFillColor(ROOT.kGreen +3)
+zjet.SetFillColor(ROOT.kCyan-5)
 zjet.SetLineColor(ROOT.kBlack)
-tthist.SetFilColor(ROOT.kSpring)
+tthist.SetFillColor(ROOT.kSpring)
 tthist.SetLineColor(ROOT.kBlack)
+QCD.SetFillColor(ROOT.kGreen-2)
+QCD.SetLineColor(ROOT.kBlack)
 
-dat.SetMarkerStyle(22)
+dat.SetMarkerStyle(20)
+dat.SetMarkerSize(1.0)
 dat.SetMarkerColor(ROOT.kBlack)
+dat.SetLineColor(ROOT.kBlack)
 
 stacks1.Add(znu)
 stacks1.Add(smh)
@@ -116,9 +119,13 @@ stacks1.Add(tthist)
 stacks1.Add(wjet)
 stacks1.Add(dibos)
 stacks1.Add(zjet)
+stacks1.Add(QCD)
 
-stacks1.Draw()
-stacks1.SetMaximum(stacks1.GetMaximum()*1.3)
+stacks1.Draw("HIST")
+dat.Draw("e,SAME")
+sig.Draw("HIST SAME")
+
+stacks1.SetMaximum(stacks1.GetMaximum()*1.7)
 stacks1.GetXaxis().SetTitle(axislabel)
 stacks1.GetXaxis().SetLabelSize(0.035)
 stacks1.GetXaxis().SetTitleSize(0.05)
@@ -126,8 +133,7 @@ stacks1.GetYaxis().SetTitle("Events")
 stacks1.GetYaxis().SetLabelSize(0.035)
 stacks1.GetYaxis().SetTitleSize(0.05)
 
-dat.Draw("sameE0")
-sig.Draw("same")
+CMS_lumi.CMS_lumi(canvas1, iPeriod, iPos)
 
 legend = ROOT.TLegend(x0_l,y0_l,x1_l, y1_l,"","brNDC")
 legend.SetFillColor(ROOT.kWhite)
@@ -139,9 +145,11 @@ legend.AddEntry(tthist, "TT")
 legend.AddEntry(wjet, "W+jets")
 legend.AddEntry(dibos, "DiBoson")
 legend.AddEntry(zjet, "Z+jets")
-legend.AddEntry(sig, "Signal")
-legend.AddEntry(dat, "Observed")
+legend.AddEntry(QCD, "QCD")
+legend.AddEntry(sig, "Signal", "l")
+legend.AddEntry(dat, "Observed", "P")
 
+legend.Draw("same")
 
 canvas1.Modified()
 canvas1.cd()
@@ -150,13 +158,10 @@ canvas1.RedrawAxis()
 frame = canvas1.GetFrame()
 frame.Draw()
 
-legend.Draw("same")
-saveas = saveWhere+str(channel)+str(variable)+'.root'
+saveas = saveWhere+channel+variable
 canvas1.Update()
-canvas1.SaveAs(saveas)
+canvas1.SaveAs(saveas+".pdf")
+canvas1.SaveAs(saveas+".png")
+canvas1.SaveAs(saveas+".root")
 canvas1
-
-
-
-
 
