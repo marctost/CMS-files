@@ -35,6 +35,8 @@ elif channel =="di":
 
 cuts = "("+selectioncuts+")*"+weight
 datacuts = "("+selectioncuts+")*1"
+QDCcuts = "("+QCDcuts+")*"+weight
+QCDcutsdata = "("+QCDcuts+")*1"
 
 #Defines all the files needed to make the histograms                                                           
 signalfile = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug27/ZpBaryonic_Zp1000_MChi150.root")
@@ -109,7 +111,7 @@ wjetstree.Draw(variable+">>+wjets_ss",QCDcuts)
 znunutree.Draw(variable+">>+znunu_ss",QCDcuts)
 zjetstree.Draw(variable+">>+zjets_ss",QCDcuts)
 tttree.Draw(variable+">>+tt_ss",QCDcuts)
-datatree.Draw(variable+">>+QCD",QCDcuts)
+datatree.Draw(variable+">>+QCD",QCDcutsdata)
 
 QCD.Add(smh_ss, -1)
 QCD.Add(dibos_ss, -1)
