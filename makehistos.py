@@ -112,6 +112,12 @@ zjetstree.Draw(variable+">>+zjets_ss",QCDcuts)
 tttree.Draw(variable+">>+tt_ss",QCDcuts)
 datatree.Draw(variable+">>+QCD",QCDdatacuts)
 
+QCD.Add(smh_ss, -1)
+QCD.Add(dibos_ss, -1)
+QCD.Add(wjet_ss, -1)
+QCD.Add(znu_ss, -1)
+QCD.Add(zjet_ss, -1)
+QCD.Add(tthist_ss, -1)
 
 
 #Where the magic happens. Shove shit into the histograms                                                       
