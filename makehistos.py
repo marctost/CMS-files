@@ -18,25 +18,24 @@ channel = argv[5]
 #di: met>160, pth>120, dR<2.1
                                                                           
 if channel == "mu":
-	selectioncuts = "m_vis<125&&pt_1>26&&pt_2>20&&npv>0&&diLeptons==0&&charge==0&&againstElectronVLooseMVA6_2>0&&againstMuonTight3_2>0&&iso04_1<0.15&&(HLT_IsoMu24_v_fired>0||HLT_IsoTkMu24_v_fired>0)&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
+	selectioncuts = "pth>65&&m_vis<125&&pt_1>26&&pt_2>20&&npv>0&&diLeptons==0&&charge==0&&againstElectronVLooseMVA6_2>0&&againstMuonTight3_2>0&&iso04_1<0.15&&(HLT_IsoMu24_v_fired>0||HLT_IsoTkMu24_v_fired>0)&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
 	weight = "__WEIGHT__*GENWEIGHT*puweight*POGid1*POGtrigger*TAUID1*trackweight*35870"
-	QCDcuts = "m_vis<125&&pt_1>26&&pt_2>20&&npv>0&&diLeptons==0&&charge!=0&&againstElectronVLooseMVA6_2>0&&againstMuonTight3_2>0&&iso04_1<0.15&&(HLT_IsoMu24_v_fired>0||HLT_IsoTkMu24_v_fired>0)&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
+	QCDcuts = "pth>65&&m_vis<125&&pt_1>26&&pt_2>20&&npv>0&&diLeptons==0&&charge!=0&&againstElectronVLooseMVA6_2>0&&againstMuonTight3_2>0&&iso04_1<0.15&&(HLT_IsoMu24_v_fired>0||HLT_IsoTkMu24_v_fired>0)&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
 
 elif channel == "e":
-	selectioncuts = "m_vis<125&&pt_1>26&&pt_2>20&&vertices>0&&dilepton_veto==0&&iso_1<0.1&&tightElectrons<=1&&tightMuons==0&&charge==0&&againstElectronTightMVA6_2>0&&againstMuonLoose3_2>0&&HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_globalTightHalo2016Filter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
+	selectioncuts = "pth>65&&m_vis<125&&pt_1>26&&pt_2>20&&vertices>0&&dilepton_veto==0&&iso_1<0.1&&tightElectrons<=1&&tightMuons==0&&charge==0&&againstElectronTightMVA6_2>0&&againstMuonLoose3_2>0&&HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_globalTightHalo2016Filter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
 	weight = "__WEIGHT__*GENWEIGHT*puweight*TAUID1*idisoweight_REDO*trackweight*35870"
-	QCDcuts = "m_vis<125&&pt_1>26&&pt_2>20&&vertices>0&&dilepton_veto==0&&iso_1<0.1&&tightElectrons<=1&&tightMuons==0&&charge!=0&&againstElectronTightMVA6_2>0&&againstMuonLoose3_2>0&&HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_globalTightHalo2016Filter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
+	QCDcuts = "pth>65&&m_vis<125&&pt_1>26&&pt_2>20&&vertices>0&&dilepton_veto==0&&iso_1<0.1&&tightElectrons<=1&&tightMuons==0&&charge!=0&&againstElectronTightMVA6_2>0&&againstMuonLoose3_2>0&&HLT_Ele25_eta2p1_WPTight_Gsf_v_fired>0&&byTightIsolationMVArun2v1DBoldDMwLT_2>0&&BadMuonFilter==1&&Flag_HBHENoiseFilter_fired==1&&Flag_HBHENoiseIsoFilter_fired==1&&Flag_globalTightHalo2016Filter_fired==1&&Flag_goodVertices_fired==1&&Flag_EcalDeadCellTriggerPrimitiveFilter_fired==1&&EffCSVWeight0==1"
 
 elif channel =="di":
-	selectioncuts = "m_vis<125&&pt_1>55&&pt_2>40&&npv>0&&tightMuons==0&&tightElectrons==0&&againstMuonLoose3_1>0&&againstElectronVLooseMVA6_1>0&&againstElectronVLooseMVA6_2>0&&charge==0&&(HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0||HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0)"
+	selectioncuts = "pth>65&&m_vis<125&&pt_1>55&&pt_2>40&&npv>0&&tightMuons==0&&tightElectrons==0&&againstMuonLoose3_1>0&&againstElectronVLooseMVA6_1>0&&againstElectronVLooseMVA6_2>0&&charge==0&&(HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0||HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0)"
 	weight = "__WEIGHT__*GENWEIGHT*puweight*trigweight_REDO*TAUID1*35870"
-	QCDcuts = "m_vis<125&&pt_1>55&&pt_2>40&&npv>0&&tightMuons==0&&tightElectrons==0&&againstMuonLoose3_1>0&&againstElectronVLooseMVA6_1>0&&againstElectronVLooseMVA6_2>0&&charge!=0&&(HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0||HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0)"
-
+	QCDcuts = "pth>65&&m_vis<125&&pt_1>55&&pt_2>40&&npv>0&&tightMuons==0&&tightElectrons==0&&againstMuonLoose3_1>0&&againstElectronVLooseMVA6_1>0&&againstElectronVLooseMVA6_2>0&&charge!=0&&(HLT_DoubleMediumIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0||HLT_DoubleMediumCombinedIsoPFTau35_Trk1_eta2p1_Reg_v_fired>0)"
 
 cuts = "("+selectioncuts+")*"+weight
 datacuts = "("+selectioncuts+")*1"
-QDCcuts = "("+QCDcuts+")*"+weight
-QCDcutsdata = "("+QCDcuts+")*1"
+QCDdatacuts = "("+QCDcuts+")*1"
+QCDcuts = "("+QCDcuts+")*"+weight
 
 #Defines all the files needed to make the histograms                                                           
 signalfile = ROOT.TFile("/nfs_scratch/tost/monohiggs_Aug27/ZpBaryonic_Zp1000_MChi150.root")
@@ -111,14 +110,8 @@ wjetstree.Draw(variable+">>+wjets_ss",QCDcuts)
 znunutree.Draw(variable+">>+znunu_ss",QCDcuts)
 zjetstree.Draw(variable+">>+zjets_ss",QCDcuts)
 tttree.Draw(variable+">>+tt_ss",QCDcuts)
-datatree.Draw(variable+">>+QCD",QCDcutsdata)
+datatree.Draw(variable+">>+QCD",QCDdatacuts)
 
-QCD.Add(smh_ss, -1)
-QCD.Add(dibos_ss, -1)
-QCD.Add(wjet_ss, -1)
-QCD.Add(znu_ss, -1)
-QCD.Add(zjet_ss, -1)
-QCD.Add(tthist_ss, -1)
 
 
 #Where the magic happens. Shove shit into the histograms                                                       
